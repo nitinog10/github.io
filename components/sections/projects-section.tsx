@@ -53,7 +53,7 @@ export function ProjectsSection() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1 }}
         >
-          <p className="text-silver text-sm tracking-[0.3em] uppercase mb-16">
+          <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-16">
             PROJECTS
           </p>
         </motion.div>
@@ -82,7 +82,7 @@ export function ProjectsSection() {
                   {project.name}
                 </h3>
 
-                <p className="text-lg md:text-xl text-silver max-w-3xl leading-relaxed mb-8">
+                <p className="text-lg md:text-xl text-muted-foreground max-w-3xl leading-relaxed mb-8">
                   {project.description}
                 </p>
 
@@ -90,7 +90,7 @@ export function ProjectsSection() {
                   {project.stack.map((tech) => (
                     <span
                       key={tech}
-                      className="text-xs tracking-[0.2em] text-silver uppercase"
+                      className="text-xs tracking-[0.2em] text-muted-foreground uppercase"
                     >
                       {tech}
                     </span>

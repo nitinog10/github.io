@@ -23,7 +23,7 @@ export function CertificationsSection() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1 }}
         >
-          <p className="text-silver text-sm tracking-[0.3em] uppercase mb-16">
+          <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-16">
             CERTIFICATIONS
           </p>
         </motion.div>
@@ -41,7 +41,7 @@ export function CertificationsSection() {
               }}
               className="group border-l-2 border-border pl-6 py-2 hover:border-accent transition-colors duration-500"
             >
-              <span className="text-lg md:text-xl text-silver tracking-wide group-hover:text-primary transition-colors duration-300">
+              <span className="text-lg md:text-xl text-muted-foreground tracking-wide group-hover:text-primary transition-colors duration-300">
                 {cert}
               </span>
             </motion.div>

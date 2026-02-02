@@ -17,7 +17,7 @@ export function IntroSection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         >
-          <p className="text-silver text-sm tracking-[0.3em] uppercase mb-8">
+          <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-8">
             INTRODUCING
           </p>
           
@@ -39,7 +39,7 @@ export function IntroSection() {
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
-                <span className="text-xl md:text-2xl lg:text-3xl tracking-[0.15em] text-silver uppercase block">
+                <span className="text-xl md:text-2xl lg:text-3xl tracking-[0.15em] text-muted-foreground uppercase block">
                   {role}
                 </span>
               </motion.div>

@@ -63,7 +63,7 @@ export function ExperienceSection() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1 }}
         >
-          <p className="text-silver text-sm tracking-[0.3em] uppercase mb-16">
+          <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-16">
             EXPERIENCE
           </p>
         </motion.div>
@@ -81,7 +81,7 @@ export function ExperienceSection() {
               }}
               className="border-l-2 border-border pl-8 hover:border-accent transition-colors duration-500"
             >
-              <p className="text-xs tracking-[0.3em] text-silver uppercase mb-2">
+              <p className="text-xs tracking-[0.3em] text-muted-foreground uppercase mb-2">
                 {exp.period}
               </p>
               <h3 className="text-2xl md:text-3xl font-bold text-primary uppercase tracking-tight mb-2">
@@ -90,7 +90,7 @@ export function ExperienceSection() {
               <p className="text-accent text-sm tracking-[0.2em] uppercase mb-4">
                 {exp.company}
               </p>
-              <p className="text-silver leading-relaxed max-w-2xl">
+              <p className="text-muted-foreground leading-relaxed max-w-2xl">
                 {exp.description}
               </p>
             </motion.div>
@@ -103,7 +103,7 @@ export function ExperienceSection() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <p className="text-silver text-sm tracking-[0.3em] uppercase mb-16">
+          <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-16">
             ACHIEVEMENTS
           </p>
         </motion.div>
@@ -121,7 +121,7 @@ export function ExperienceSection() {
               }}
               className="group p-6 border border-border hover:border-accent transition-colors duration-500"
             >
-              <p className="text-xs tracking-[0.3em] text-silver uppercase mb-2">
+              <p className="text-xs tracking-[0.3em] text-muted-foreground uppercase mb-2">
                 {achievement.year}
               </p>
               <h3 className="text-lg font-bold text-primary uppercase tracking-tight mb-2 group-hover:text-accent transition-colors duration-300">

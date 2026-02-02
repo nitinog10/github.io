@@ -34,7 +34,7 @@ export function SkillsSection() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1 }}
         >
-          <p className="text-silver text-sm tracking-[0.3em] uppercase mb-16">
+          <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-16">
             SKILLS
           </p>
         </motion.div>
@@ -66,7 +66,7 @@ export function SkillsSection() {
                     }}
                     className="group"
                   >
-                    <span className="text-lg md:text-xl text-silver tracking-[0.1em] transition-colors duration-300 group-hover:text-primary">
+                    <span className="text-lg md:text-xl text-muted-foreground tracking-[0.1em] transition-colors duration-300 group-hover:text-primary">
                       {skill}
                     </span>
                   </motion.div>

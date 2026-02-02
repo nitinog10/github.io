@@ -15,7 +15,7 @@ export function AboutSection() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1 }}
         >
-          <p className="text-silver text-sm tracking-[0.3em] uppercase mb-16">
+          <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-16">
             ABOUT
           </p>
         </motion.div>
@@ -40,20 +40,20 @@ export function AboutSection() {
             transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-8"
           >
-            <p className="text-lg text-silver leading-relaxed">
+            <p className="text-lg text-muted-foreground leading-relaxed">
               Pursuing a Bachelor of Technology in Artificial Intelligence at
               Oriental Group of Institutes, while serving as Head Alumni to
               foster collaboration and innovation within the academic community.
             </p>
 
-            <p className="text-lg text-silver leading-relaxed">
+            <p className="text-lg text-muted-foreground leading-relaxed">
               My goal is to continuously grow in the AI domain while enabling
               meaningful advancements in technology that shape the future of
               human-computer interaction.
             </p>
 
             <div className="pt-8 border-t border-border">
-              <p className="text-sm text-silver tracking-[0.2em] uppercase">
+              <p className="text-sm text-muted-foreground tracking-[0.2em] uppercase">
                 BASED IN
               </p>
               <p className="text-xl text-primary mt-2">

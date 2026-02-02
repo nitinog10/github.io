@@ -1,16 +1,15 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
-import Lenis from "lenis"
 
 interface ScrollContextType {
-  lenis: Lenis | null
   scrollProgress: number
+  scrollY: number
 }
 
 const ScrollContext = createContext<ScrollContextType>({
-  lenis: null,
   scrollProgress: 0,
+  scrollY: 0,
 })
 
 export function useSmoothScroll() {
@@ -18,36 +17,28 @@ export function useSmoothScroll() {
 }
 
 export function SmoothScrollProvider({ children }: { children: ReactNode }) {
-  const [lenis, setLenis] = useState<Lenis | null>(null)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [scrollY, setScrollY] = useState(0)
 
   useEffect(() => {
-    const lenisInstance = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    })
-
-    setLenis(lenisInstance)
-
-    function raf(time: number) {
-      lenisInstance.raf(time)
-      requestAnimationFrame(raf)
+    const handleScroll = () => {
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const progress = docHeight > 0 ? scrollTop / docHeight : 0
+      setScrollProgress(progress)
+      setScrollY(scrollTop)
     }
 
-    requestAnimationFrame(raf)
-
-    lenisInstance.on("scroll", ({ progress }: { progress: number }) => {
-      setScrollProgress(progress)
-    })
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    handleScroll()
 
     return () => {
-      lenisInstance.destroy()
+      window.removeEventListener("scroll", handleScroll)
     }
   }, [])
 
   return (
-    <ScrollContext.Provider value={{ lenis, scrollProgress }}>
+    <ScrollContext.Provider value={{ scrollProgress, scrollY }}>
       {children}
     </ScrollContext.Provider>
   )

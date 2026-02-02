@@ -56,7 +56,7 @@ export default function Portfolio() {
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 2 }}
-            className="text-silver text-xs tracking-[0.3em] uppercase"
+            className="text-muted-foreground text-xs tracking-[0.3em] uppercase"
           >
             {!showMainContent && "SCROLL"}
           </motion.div>

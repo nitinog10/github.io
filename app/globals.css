@@ -15,7 +15,7 @@
   --color-secondary: #171717;
   --color-secondary-foreground: #e5e5e5;
   --color-muted: #171717;
-  --color-muted-foreground: #737373;
+  --color-muted-foreground: #a3a3a3;
   --color-accent: #0ff0fc;
   --color-accent-foreground: #000000;
   --color-destructive: #ef4444;
@@ -23,7 +23,6 @@
   --color-border: #262626;
   --color-input: #262626;
   --color-ring: #0ff0fc;
-  --color-silver: #a3a3a3;
   --radius: 0px;
   --font-sans: var(--font-space-mono), ui-monospace, monospace;
   --font-mono: var(--font-space-mono), ui-monospace, monospace;
