@@ -1,10 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import dynamic from 'next/dynamic'
-
-const Background3D = dynamic(() => import('@/components/Background3D'), { ssr: false })
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null)
