@@ -68,6 +68,19 @@ const IntroSection = () => {
               ))}
             </div>
 
+            {/* About paragraph */}
+            <motion.p
+              className="md:ml-[20%] mt-12 text-sm md:text-base text-muted-foreground/60 leading-relaxed max-w-xl"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              I design and build intelligent systems at the intersection of{' '}
+              <span className="text-accent">Generative AI</span>,{' '}
+              <span className="text-accent">Computer Vision</span>, and{' '}
+              <span className="text-accent">Scalable Architecture</span>.
+            </motion.p>
+
             {/* Social Links */}
             <motion.div
               className="md:ml-[20%] flex items-center gap-8 mt-12"

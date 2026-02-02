@@ -103,7 +103,7 @@ const ProjectsSection = () => {
                       <motion.img
                         src={project.image}
                         alt={project.name}
-                        className="w-full h-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-700"
+                        className="w-full h-auto object-contain transition-all duration-700"
                         initial={{ scale: 1.05 }}
                         whileInView={{ scale: 1 }}
                         transition={{ duration: 1.2 }}

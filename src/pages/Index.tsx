@@ -6,7 +6,6 @@ import ScrollProgress from '@/components/ScrollProgress';
 import MagneticCursor from '@/components/MagneticCursor';
 import HeroSection from '@/components/HeroSection';
 import IntroSection from '@/components/IntroSection';
-import AboutSection from '@/components/AboutSection';
 import SkillsSection from '@/components/SkillsSection';
 import ProjectsSection from '@/components/ProjectsSection';
 import ExperienceSection from '@/components/ExperienceSection';
@@ -41,7 +40,6 @@ const Index = () => {
       {/* Main content after hero transition */}
       <div className="relative z-10">
         <IntroSection />
-        <AboutSection />
         <SkillsSection />
         <TechStackSection />
         <RecognitionSection />
