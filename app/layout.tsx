@@ -32,7 +32,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={jetbrainsMono.variable}>
-      <body>
+      <body className="overflow-x-hidden">
         {children}
       </body>
     </html>
