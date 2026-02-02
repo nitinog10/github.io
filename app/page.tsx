@@ -1,7 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { ArrowRight, Github, Linkedin, Mail, Code2, Brain, Zap } from 'lucide-react'
+import { ArrowRight, Linkedin, Mail, Code2, Brain, Zap } from 'lucide-react'
 import Link from 'next/link'
 
 export default function Home() {
@@ -61,9 +60,9 @@ export default function Home() {
               {/* CTA Button */}
               <div className="pt-4">
                 <Link href="#projects">
-                  <Button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white border-0 px-8 py-6 text-lg rounded-lg font-semibold flex items-center gap-2 group">
+                  <button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-6 text-lg rounded-lg font-semibold flex items-center gap-2 group transition-all">
                     Let's Start <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                  </button>
                 </Link>
               </div>
             </div>
@@ -176,14 +175,14 @@ export default function Home() {
               <p className="text-slate-400 text-lg">Interested in collaborating on AI-powered solutions? Reach out!</p>
               <div className="flex gap-4 justify-center">
                 <Link href="mailto:nitiniszod10@gmail.com">
-                  <Button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2">
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 transition-all">
                     <Mail className="w-5 h-5" /> Email Me
-                  </Button>
+                  </button>
                 </Link>
                 <Link href="https://linkedin.com/in/nitin-kumar-mishra-520615331" target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" className="border-blue-500/50 text-blue-400 hover:bg-blue-500/10 px-8 py-3 rounded-lg font-semibold flex items-center gap-2">
+                  <button className="border border-blue-500/50 text-blue-400 hover:bg-blue-500/10 px-8 py-3 rounded-lg font-semibold flex items-center gap-2 transition-all">
                     <Linkedin className="w-5 h-5" /> LinkedIn
-                  </Button>
+                  </button>
                 </Link>
               </div>
             </div>
