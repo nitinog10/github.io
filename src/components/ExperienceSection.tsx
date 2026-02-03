@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
 const experiences = [
   {
@@ -25,7 +25,52 @@ const experiences = [
   }
 ];
 
+// Individual experience card with scroll animation
+const ExperienceCard = ({ exp, index }: { exp: typeof experiences[0]; index: number }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"]
+  });
+  
+  // Alternate left/right entry based on index
+  const isFromLeft = index % 2 === 0;
+  const xOffset = isFromLeft ? -120 : 120;
+  
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+  const x = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [xOffset, 0, 0, -xOffset]);
+  const y = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [20, 0, 0, -20]);
+  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.95, 1, 1, 0.95]);
+  const rotateY = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [isFromLeft ? -5 : 5, 0, 0, isFromLeft ? 5 : -5]);
 
+  return (
+    <motion.div
+      ref={cardRef}
+      className={`grid grid-cols-12 gap-4 ${index % 2 === 1 ? 'md:ml-[15%]' : ''}`}
+      style={{ opacity, x, y, scale, rotateY, transformPerspective: 1200 }}
+    >
+      <div className="col-span-12 md:col-span-3">
+        <span className="text-xs md:text-sm tracking-[0.2em] text-muted-foreground/40 uppercase">
+          {exp.period}
+        </span>
+      </div>
+      <div className="col-span-12 md:col-span-9">
+        <h3 
+          className="text-xl md:text-3xl lg:text-4xl font-bold text-primary uppercase tracking-tight mb-2"
+          style={{ fontFamily: 'var(--font-heading)' }}
+        >
+          {exp.role}
+        </h3>
+        <span className="text-sm md:text-base text-accent tracking-[0.15em] uppercase block mb-3">
+          {exp.company}
+        </span>
+        <p className="text-sm md:text-base text-muted-foreground/60 leading-relaxed max-w-md">
+          {exp.description}
+        </p>
+      </div>
+    </motion.div>
+  );
+};
 
 const ExperienceSection = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -61,37 +106,7 @@ const ExperienceSection = () => {
             {/* Experience entries */}
             <div className="space-y-16">
               {experiences.map((exp, index) => (
-                <motion.div
-                  key={exp.company}
-                  className={`grid grid-cols-12 gap-4 ${index % 2 === 1 ? 'md:ml-[15%]' : ''}`}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                  transition={{
-                    duration: 0.7,
-                    delay: 0.1 + index * 0.1,
-                    ease: [0.16, 1, 0.3, 1]
-                  }}
-                >
-                  <div className="col-span-12 md:col-span-3">
-                    <span className="text-xs md:text-sm tracking-[0.2em] text-muted-foreground/40 uppercase">
-                      {exp.period}
-                    </span>
-                  </div>
-                  <div className="col-span-12 md:col-span-9">
-                    <h3 
-                      className="text-xl md:text-3xl lg:text-4xl font-bold text-primary uppercase tracking-tight mb-2"
-                      style={{ fontFamily: 'var(--font-heading)' }}
-                    >
-                      {exp.role}
-                    </h3>
-                    <span className="text-sm md:text-base text-accent tracking-[0.15em] uppercase block mb-3">
-                      {exp.company}
-                    </span>
-                    <p className="text-sm md:text-base text-muted-foreground/60 leading-relaxed max-w-md">
-                      {exp.description}
-                    </p>
-                  </div>
-                </motion.div>
+                <ExperienceCard key={exp.company} exp={exp} index={index} />
               ))}
             </div>
           </div>

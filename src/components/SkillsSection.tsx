@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
 const skillGroups = [
   {
@@ -20,12 +20,57 @@ const skillGroups = [
   }
 ];
 
+// Individual skill group with scroll animation
+const SkillGroupCard = ({ group, groupIndex }: { group: typeof skillGroups[0]; groupIndex: number }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const isFromLeft = groupIndex % 2 === 0;
+  const xOffset = isFromLeft ? -100 : 100;
+  
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+  const x = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [xOffset, 0, 0, -xOffset]);
+  const y = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [20, 0, 0, -20]);
+  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.95, 1, 1, 0.95]);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      className={`grid grid-cols-12 gap-4 ${groupIndex % 2 === 1 ? 'md:ml-[20%]' : ''}`}
+      style={{ opacity, x, y, scale }}
+    >
+      {/* Category name */}
+      <div className="col-span-12 md:col-span-4">
+        <h3 className="text-xs md:text-sm font-bold text-accent uppercase tracking-[0.2em] mb-6">
+          {group.category}
+        </h3>
+      </div>
+      
+      {/* Skills list */}
+      <div className="col-span-12 md:col-span-8">
+        <div className="space-y-2">
+          {group.skills.map((skill) => (
+            <div key={skill} className="group cursor-default">
+              <span className="text-sm md:text-base text-muted-foreground/70 group-hover:text-primary transition-colors duration-300 leading-relaxed">
+                {skill}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const SkillsSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, margin: "-10%" });
 
   return (
-    <section ref={ref} className="section-full bg-secondary/20 backdrop-blur-sm py-32 md:py-48">
+    <section ref={ref} className="section-full bg-secondary/20 backdrop-blur-sm py-32 md:py-48 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-12 gap-4">
           {/* Section indicator */}
@@ -56,47 +101,7 @@ const SkillsSection = () => {
             {/* Skills in asymmetric columns */}
             <div className="space-y-20">
               {skillGroups.map((group, groupIndex) => (
-                <motion.div
-                  key={group.category}
-                  className={`grid grid-cols-12 gap-4 ${groupIndex % 2 === 1 ? 'md:ml-[20%]' : ''}`}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.1 + groupIndex * 0.12,
-                    ease: [0.16, 1, 0.3, 1]
-                  }}
-                >
-                  {/* Category name */}
-                  <div className="col-span-12 md:col-span-4">
-                    <h3 className="text-xs md:text-sm font-bold text-accent uppercase tracking-[0.2em] mb-6">
-                      {group.category}
-                    </h3>
-                  </div>
-                  
-                  {/* Skills list */}
-                  <div className="col-span-12 md:col-span-8">
-                    <div className="space-y-2">
-                      {group.skills.map((skill, skillIndex) => (
-                        <motion.div
-                          key={skill}
-                          className="group cursor-default"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                          transition={{
-                            duration: 0.5,
-                            delay: 0.3 + groupIndex * 0.1 + skillIndex * 0.04,
-                            ease: [0.16, 1, 0.3, 1]
-                          }}
-                        >
-                          <span className="text-sm md:text-base text-muted-foreground/70 group-hover:text-primary transition-colors duration-300 leading-relaxed">
-                            {skill}
-                          </span>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
+                <SkillGroupCard key={group.category} group={group} groupIndex={groupIndex} />
               ))}
             </div>
           </div>

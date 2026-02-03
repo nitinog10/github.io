@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import {
   SiPython,
   SiTypescript,
@@ -46,14 +46,55 @@ const technologies = [
   { icon: SiVercel, name: "Vercel" },
 ];
 
-const TechStackSection = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+// Individual tech icon with scroll animation
+const TechIcon = ({ tech, index }: { tech: typeof technologies[0]; index: number }) => {
+  const iconRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: iconRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const isFromLeft = index % 2 === 0;
+  const xOffset = isFromLeft ? -50 : 50;
+  
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+  const x = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [xOffset, 0, 0, -xOffset]);
+  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.8, 1, 1, 0.8]);
 
   return (
-    <section
+    <motion.div
+      ref={iconRef}
+      className="group flex flex-col items-center gap-4"
+      style={{ opacity, x, scale }}
+    >
+      <tech.icon
+        className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 text-[#a8a8a8] transition-all duration-300 ease-out group-hover:text-[#00ffc8] group-hover:drop-shadow-[0_0_12px_rgba(0,255,200,0.5)]"
+      />
+      <span className="text-[10px] md:text-xs tracking-[0.15em] text-muted-foreground/40 uppercase group-hover:text-[#00ffc8]/70 transition-colors duration-300">
+        {tech.name}
+      </span>
+    </motion.div>
+  );
+};
+
+const TechStackSection = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: false, margin: "-10%" });
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+  
+  // Section enters from LEFT
+  const sectionOpacity = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [0, 1, 1, 0]);
+  const sectionX = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [-80, 0, 0, 80]);
+
+  return (
+    <motion.section
       ref={sectionRef}
-      className="relative min-h-screen py-32 px-6 md:px-12 lg:px-24 bg-background/20"
+      className="relative min-h-screen py-32 px-6 md:px-12 lg:px-24 bg-background/20 overflow-hidden"
+      style={{ opacity: sectionOpacity, x: sectionX }}
     >
       <div className="max-w-[1800px] mx-auto">
         {/* Section header */}
@@ -88,35 +129,11 @@ const TechStackSection = () => {
         {/* Tech icons grid */}
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-10 md:col-start-2">
-            <motion.div
-              className="flex flex-wrap gap-x-12 gap-y-16 md:gap-x-16 lg:gap-x-20 justify-start"
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
+            <div className="flex flex-wrap gap-x-12 gap-y-16 md:gap-x-16 lg:gap-x-20 justify-start">
               {technologies.map((tech, index) => (
-                <motion.div
-                  key={tech.name}
-                  className="group flex flex-col items-center gap-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={
-                    isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                  }
-                  transition={{
-                    duration: 0.5,
-                    delay: 0.1 + index * 0.03,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                >
-                  <tech.icon
-                    className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 text-[#a8a8a8] transition-all duration-300 ease-out group-hover:text-[#00ffc8] group-hover:drop-shadow-[0_0_12px_rgba(0,255,200,0.5)]"
-                  />
-                  <span className="text-[10px] md:text-xs tracking-[0.15em] text-muted-foreground/40 uppercase group-hover:text-[#00ffc8]/70 transition-colors duration-300">
-                    {tech.name}
-                  </span>
-                </motion.div>
+                <TechIcon key={tech.name} tech={tech} index={index} />
               ))}
-            </motion.div>
+            </div>
           </div>
         </div>
 
@@ -128,7 +145,7 @@ const TechStackSection = () => {
           transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
         />
       </div>
-    </section>
+    </motion.section>
   );
 };
 

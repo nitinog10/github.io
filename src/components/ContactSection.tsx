@@ -1,12 +1,27 @@
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
 const ContactSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, margin: "-20%" });
+  
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+  
+  // Enter from RIGHT, exit to LEFT
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+  const x = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [100, 0, 0, -100]);
+  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.95, 1, 1, 0.95]);
+  const rotateY = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [8, 0, 0, -8]);
 
   return (
-    <section ref={ref} className="section-full bg-background/20 backdrop-blur-sm py-32 md:py-48 min-h-screen flex items-center">
+    <motion.section 
+      ref={ref} 
+      className="section-full bg-background/20 backdrop-blur-sm py-32 md:py-48 min-h-screen flex items-center overflow-hidden"
+      style={{ opacity, x, scale, rotateY, transformPerspective: 1200 }}
+    >
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
         <div className="grid grid-cols-12 gap-4">
           {/* Section indicator */}
@@ -130,7 +145,7 @@ const ContactSection = () => {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
